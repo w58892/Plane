@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@drawable/niebo"
     android:screenOrientation="portrait"
     android:weightSum="1"
     tools:context=".GameOverActivity"
@@ -30,7 +30,7 @@
         android:text="score"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/colorPrimary"
-        android:textSize="25sp"
+        android:textSize="35sp"
         android:textStyle="bold"/>
 
     <Button
@@ -44,6 +44,17 @@
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/highScore"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15"
+        android:text="HighScore"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
         android:textStyle="bold"/>
 
 </LinearLayout>
