@@ -64,15 +64,13 @@ public class PlaneView extends View {
         screenHeight = canvas.getHeight();
         screenWidth = canvas.getWidth();
 
-        int scoreTextSize = screenHeight/32;
+        int scoreTextSize = screenHeight/25;
         scorePaint.setTextSize(scoreTextSize);
 
         scorePaint.setTypeface(Typeface.DEFAULT_BOLD);
         scorePaint.setAntiAlias(true);
 
-
-
-        cloudSpeed = screenWidth/25;
+        cloudSpeed = screenHeight/45;
 
         canvas.drawBitmap(backgroundImage,0,0,null);
         canvas.drawBitmap(plane, planeX, planeY, null);
@@ -100,7 +98,7 @@ public class PlaneView extends View {
         cloudY = cloudY + cloudSpeed;
         cloud2Y = cloud2Y + cloudSpeed;
 
-        if(hitBallChecker(cloudX, cloudY) || hitBallChecker(cloud2X, cloud2Y)) {
+        if(hitBoxChecker(cloudX, cloudY) || hitBoxChecker(cloud2X, cloud2Y)) {
 
             if(cloudHit == false)
                 lifeCounter--;
@@ -141,9 +139,9 @@ public class PlaneView extends View {
         canvas.drawText("Punkty: "+ score, 20, scoreTextSize, scorePaint);
     }
 
-    public boolean hitBallChecker(int x, int y){
-        if(planeX < (x + plane.getWidth()) && (planeX + plane.getWidth()) > x  &&
-            planeY < (y + plane.getHeight()) && (planeY + plane.getHeight()) > y ){
+    public boolean hitBoxChecker(int x, int y){
+        if(planeX < (x + cloud.getWidth()) && (planeX + plane.getWidth()) > x  &&
+            planeY < (y + cloud.getHeight()) && (planeY + plane.getHeight()) > y ){
                  return true;
         } else{
              return false;

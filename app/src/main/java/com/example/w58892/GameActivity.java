@@ -1,17 +1,22 @@
 package com.example.w58892;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
+
+    private PlaneView planeView;
+    private Handler handler = new Handler();
+    private final static long interval = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+
 
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
@@ -23,15 +28,31 @@ public class GameActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
 
-        Button play = findViewById(R.id.play);
+        planeView = new PlaneView(this);
+        setContentView(planeView);
 
-        play.setOnClickListener(new View.OnClickListener() {
+        //planeView jest odświeżany co 30 ms (33 razy na sekundę)
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
             @Override
-            public void onClick(View v) {
-                Intent mainIntent = new Intent(GameActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        planeView.invalidate();
+                        if(planeView.isGameOver() == true) {
+                            timer.cancel();
+                            planeView.gameOver();
+                        }
+                    }
+                });
             }
-        });
+        },0,interval);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 }

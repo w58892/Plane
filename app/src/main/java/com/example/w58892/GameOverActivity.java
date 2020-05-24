@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
+//Ekran konca gry
+
 public class GameOverActivity extends AppCompatActivity {
 
     private Button playAgain;
@@ -32,6 +35,7 @@ public class GameOverActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
 
+        //odebranie ilości zdobytych punktów z poprzedniej aktywnosci
         score = getIntent().getIntExtra("score",0);
 
         playAgain = findViewById(R.id.playAgain);
@@ -44,7 +48,7 @@ public class GameOverActivity extends AppCompatActivity {
         int highScore = prefs.getInt("High_Score",0);
 
         if (score > highScore) {
-            DisplayHighScore.setText("Rekord :" + score);
+            DisplayHighScore.setText("Rekord: " + score);
 
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("High_Score",score);
@@ -53,10 +57,11 @@ public class GameOverActivity extends AppCompatActivity {
             DisplayHighScore.setText("Rekord : " + highScore);
         }
 
+
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Intent = new Intent(GameOverActivity.this, MainActivity.class);
+                Intent Intent = new Intent(GameOverActivity.this, GameActivity.class);
                 startActivity(Intent);
             }
         });

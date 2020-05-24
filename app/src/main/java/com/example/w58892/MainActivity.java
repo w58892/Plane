@@ -1,22 +1,21 @@
 package com.example.w58892;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import java.util.Timer;
-import java.util.TimerTask;
+import android.widget.Button;
+
+//Ekran startowy
 
 public class MainActivity extends AppCompatActivity {
-
-    private PlaneView gameView;
-    private Handler handler = new Handler();
-    private final static long interval = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        //wyświetla aplikację na pełnym ekranie z ukrytą górną belką i przyciskami
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -27,32 +26,15 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
 
-
-
-        gameView = new PlaneView(this);
-        setContentView(gameView);
-
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        //po naciśnięciu przycisku "Zagraj" pprzekiwerowuje do nowej aktywności
+        Button play = findViewById(R.id.play);
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameView.invalidate();
-                        if(gameView.isGameOver() == true) {
-                            timer.cancel();
-                            gameView.gameOver();
-                        }
-                    }
-                });
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(mainIntent);
             }
-        },0,interval);
+        });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }
 }
